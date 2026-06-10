@@ -1,0 +1,82 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout site root (public)
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # --- Project A: unstyled (private) ---
+      - name: Checkout unstyled
+        uses: actions/checkout@v4
+        with:
+          repository: zenebyte/unstyled
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: src/unstyled
+
+      - name: Build unstyled docs
+        run: |
+          cd src/unstyled/docs
+          yarn
+          yarn build
+
+      - name: Collect unstyled into site
+        run: |
+          mkdir -p _site/unstyled
+          cp -r src/unstyled/docs/dist/. _site/unstyled/
+
+      # --- Project B: unocss-presets (private) ---
+      - name: Checkout unocss-presets
+        uses: actions/checkout@v4
+        with:
+          repository: zenebyte/unocss-presets
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: src/unocss-presets
+
+      - name: Build unocss-presets docs
+        run: |
+          cd src/unocss-presets/docs
+          yarn
+          yarn build
+
+      - name: Collect unocss-presets into site
+        run: |
+          mkdir -p _site/unocss-presets
+          cp -r src/unocss-presets/docs/dist/. _site/unocss-presets/
+
+      # Root site content (README, landing page, etc.) — excludes build dirs and metadata
+      - name: Collect root content into site
+        run: |
+          rsync -a --exclude='.git' --exclude='.github' --exclude='src' --exclude='_site' ./ _site/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
