@@ -41,7 +41,7 @@ jobs:
         run: |
           cd src/unstyled/docs
           yarn
-          yarn build --base=/unstyled/
+          yarn build
 
       - name: Collect unstyled into site
         run: |
@@ -60,7 +60,7 @@ jobs:
         run: |
           cd src/unocss-presets/docs
           yarn
-          yarn build --base=/unocss-presets/
+          yarn build
 
       - name: Collect unocss-presets into site
         run: |
