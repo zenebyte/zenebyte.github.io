@@ -1,15 +1,15 @@
 # <org>.github.io/.github/workflows/deploy.yml
 jobs:
   build-project-a:
-    uses: <zenebyte>/unstyled/.github/workflows/docs.yml@main
+    uses: zenebyte/unstyled/.github/workflows/docs.yml@main
     secrets: inherit
 
   build-project-b:
-    uses: <zenebyte>/unocss-preset/.github/workflows/docs.yml@main
+    uses: zenebyte/unocss-presets/.github/workflows/docs.yml@main
     secrets: inherit
 
   assemble-and-deploy:
-    needs: [unstyled, unocss-preset]
+    needs: [unstyled, unocss-presets]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4       # root site content
@@ -21,7 +21,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: unocss-preset
-          path: ./unocss-preset
+          name: unocss-presets
+          path: ./unocss-presets
 
       - uses: actions/deploy-pages@v4
