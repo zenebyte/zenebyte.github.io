@@ -1,10 +1,10 @@
 # <org>.github.io/.github/workflows/deploy.yml
 jobs:
-  build-project-a:
+  build-unstyled:
     uses: zenebyte/unstyled/.github/workflows/docs.yml@main
     secrets: inherit
 
-  build-project-b:
+  build-unocss-presets:
     uses: zenebyte/unocss-presets/.github/workflows/docs.yml@main
     secrets: inherit
 
@@ -16,12 +16,12 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: unstyled
+          name: build-unstyled
           path: ./unstyled
 
       - uses: actions/download-artifact@v4
         with:
-          name: unocss-presets
+          name: build-unocss-presets
           path: ./unocss-presets
 
       - uses: actions/deploy-pages@v4
