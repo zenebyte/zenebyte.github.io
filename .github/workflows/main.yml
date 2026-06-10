@@ -1,4 +1,9 @@
 # <org>.github.io/.github/workflows/deploy.yml
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  
 jobs:
   build-unstyled:
     uses: zenebyte/unstyled/.github/workflows/docs.yml@main
