@@ -9,7 +9,7 @@ jobs:
     secrets: inherit
 
   assemble-and-deploy:
-    needs: [unstyled, unocss-presets]
+    needs: [build-unstyled, build-unocss-presets]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4       # root site content
