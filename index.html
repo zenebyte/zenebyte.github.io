@@ -56,7 +56,8 @@
     }
     .hero p { max-width: 36rem; margin: 0 auto; color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.2rem); }
 
-    .grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
     a.card {
       position: relative; display: flex; flex-direction: column;
       text-decoration: none; color: inherit;
@@ -143,6 +144,20 @@
           <span class="tag">SSR</span>
           <span class="tag">Code-splitting</span>
           <span class="tag">HMR</span>
+        </div>
+        <span class="cta">View documentation <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card" href="/loom/">
+        <div class="eyebrow">@zenebyte/loom</div>
+        <h2>Tailwind & Bootstrap, woven together</h2>
+        <p>One install. Write Tailwind, Bootstrap, or both — Loom detects the utilities you use, generates the right CSS, and injects it automatically. There's no config to write and no build step to wire up: drop it in and it figures out which framework's classes are in play, deduplicates overlapping styles, and ships only what your markup actually references.</p>
+        <div class="tags">
+          <span class="tag">Tailwind</span>
+          <span class="tag">Bootstrap</span>
+          <span class="tag">Auto-detect</span>
+          <span class="tag">Zero-config</span>
+          <span class="tag">On-demand CSS</span>
         </div>
         <span class="cta">View documentation <span class="arrow">→</span></span>
       </a>

@@ -87,6 +87,26 @@ jobs:
         run: |
           mkdir -p _site/keel
           cp -r src/keel/docs/dist/. _site/keel/    
+      
+
+      # --- Project D: Loom (private) ---
+      - name: Checkout Loom
+        uses: actions/checkout@v4
+        with:
+          repository: zenebyte/loom
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          path: src/loom
+
+      - name: Build loom docs
+        run: |
+          cd src/loom/docs
+          yarn
+          yarn build
+
+      - name: Collect loom into site
+        run: |
+          mkdir -p _site/loom
+          cp -r src/loom/docs/dist/. _site/loom/ 
 
       # Root site content (README, landing page, etc.) — excludes build dirs and metadata
       - name: Collect root content into site
