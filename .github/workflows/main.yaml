@@ -29,24 +29,24 @@ jobs:
         with:
           node-version: 22
 
-      # --- Project A: unstyled (private) ---
-      - name: Checkout unstyled
+      # --- Project A: lumis (private) ---
+      - name: Checkout lumis
         uses: actions/checkout@v4
         with:
-          repository: zenebyte/unstyled
+          repository: zenebyte/lumis
           token: ${{ secrets.PRIVATE_REPO_PAT }}
-          path: src/unstyled
+          path: src/lumis
 
-      - name: Build unstyled docs
+      - name: Build lumis docs
         run: |
-          cd src/unstyled/docs
+          cd src/lumis/docs
           yarn
           yarn build
 
-      - name: Collect unstyled into site
+      - name: Collect lumis into site
         run: |
-          mkdir -p _site/unstyled
-          cp -r src/unstyled/docs/dist/. _site/unstyled/
+          mkdir -p _site/lumis
+          cp -r src/lumis/docs/dist/. _site/lumis/
 
       # --- Project B: unocss-presets (private) ---
       - name: Checkout unocss-presets
